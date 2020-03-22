@@ -11,7 +11,7 @@ name: OpenWrt-newifi3-Lienol
 on:
   push:
     branches:
-      - master
+      - dev-19.07
   # schedule:
   #   - cron: 0 20 * * *
   # release:
