@@ -154,7 +154,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-mwan3helper=n
           CONFIG_PACKAGE_luci-app-syncdial=n
           CONFIG_PACKAGE_luci-app-unblockmusic=n
-          CONFIG_PACKAGE_luci-app-arpbind=
+          CONFIG_PACKAGE_luci-app-arpbind=y
           EOF
           # LuCI主题:
           cat >> .config <<EOF
@@ -200,7 +200,7 @@ jobs:
       run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          find ./bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
+          find ./bin/targets/ -name "*config*" | xargs -i mv -f {} ./artifact/
           find ./bin/targets/ -name "*sysupgrade*bin*" | xargs -i mv -f {} ./artifact/
     - name: Upload artifact
       uses: actions/upload-artifact@master
