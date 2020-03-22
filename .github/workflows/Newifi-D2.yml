@@ -42,17 +42,17 @@ jobs:
         REPO_BRANCH: dev-19.07
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
     - name: 自定义插件
-        run: |
+      run: |
           cd package
           mkdir openwrt-packages
           cd openwrt-packages|
           git clone https://github.com/jefferymvp/luci-app-koolproxyR.git
     - name: Update feeds
-        run: |
+      run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
     - name: Generate configuration file
-        run: |
+      run: |
           rm -f ./.config*
           touch ./.config
           #
@@ -181,12 +181,12 @@ jobs:
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
     - name: Make download
-        run: |
+      run: |
           make download -j8
           find ./dl/ -size -1024c -exec rm -f {} \;
           df -h
     - name: Compile firmware
-        run: |
+      run: |
           make -j$(nproc) || make -j1 V=s
           echo "======================="
           echo "Space usage:"
@@ -197,13 +197,13 @@ jobs:
           du -h --max-depth=1 ./build_dir
           du -h --max-depth=1 ./bin
     - name: Prepare artifact
-        run: |
+      run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
           find ./bin/targets/ -name "*combined*img*" | xargs -i mv -f {} ./artifact/
           find ./bin/targets/ -name "*sysupgrade*bin*" | xargs -i mv -f {} ./artifact/
     - name: Upload artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: OpenWrt firmware
-          path: ./artifact/
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt firmware
+        path: ./artifact/
